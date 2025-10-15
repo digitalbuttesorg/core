@@ -7,17 +7,25 @@ from typing import Any
 
 from homeassistant.const import EVENT_STATE_CHANGED, Platform
 from homeassistant.core import Event, HomeAssistant, State, callback
-from homeassistant.helpers import device_registry as dr, entity_registry as er
+from homeassistant.helpers import config_validation as cv, device_registry as dr, entity_registry as er
 from homeassistant.helpers.device_registry import (
     CONNECTION_BLUETOOTH,
     CONNECTION_NETWORK_MAC,
 )
 from homeassistant.helpers.typing import ConfigType
 
-from .const import CONF_API_KEY, CONF_API_URL, CONF_ENABLE_DEMO, CONF_TRACKED_ENTITIES
+from .const import (
+    CONF_API_KEY,
+    CONF_API_URL,
+    CONF_ENABLE_DEMO,
+    CONF_TRACKED_ENTITIES,
+    DOMAIN,
+)
 from .types import PlantRangerConfigEntry
 
 _LOGGER = logging.getLogger(__name__)
+
+CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 
 class PlantRangerData:
