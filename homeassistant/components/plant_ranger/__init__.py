@@ -5,9 +5,13 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from homeassistant.const import EVENT_STATE_CHANGED, Platform
+from homeassistant.const import CONF_ACCESS_TOKEN, EVENT_STATE_CHANGED, Platform
 from homeassistant.core import Event, HomeAssistant, State, callback
 from homeassistant.helpers import config_validation as cv, device_registry as dr, entity_registry as er
+from homeassistant.helpers.config_entry_oauth2_flow import (
+    OAuth2Session,
+    async_get_config_entry_implementation,
+)
 from homeassistant.helpers.device_registry import (
     CONNECTION_BLUETOOTH,
     CONNECTION_NETWORK_MAC,
@@ -15,8 +19,6 @@ from homeassistant.helpers.device_registry import (
 from homeassistant.helpers.typing import ConfigType
 
 from .const import (
-    CONF_API_KEY,
-    CONF_API_URL,
     CONF_ENABLE_DEMO,
     CONF_TRACKED_ENTITIES,
     DOMAIN,
@@ -31,12 +33,11 @@ CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 class PlantRangerData:
     """Runtime data for Plant Ranger integration."""
 
-    def __init__(self, api_key: str, api_url: str) -> None:
+    def __init__(self, oauth_session: OAuth2Session) -> None:
         """Initialize the Plant Ranger data."""
-        self.api_key = api_key
-        self.api_url = api_url
-        # TODO: Initialize actual API client
-        # self.client = PlantRangerClient(api_key, api_url)
+        self.oauth_session = oauth_session
+        # TODO: Initialize actual API client with OAuth token
+        # self.client = PlantRangerClient(oauth_session)
 
 
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
@@ -46,13 +47,17 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
 
 async def async_setup_entry(hass: HomeAssistant, entry: PlantRangerConfigEntry) -> bool:
     """Set up Plant Ranger from a config entry."""
-    api_key = entry.data[CONF_API_KEY]
-    api_url = entry.data[CONF_API_URL]
+    implementation = await async_get_config_entry_implementation(hass, entry)
+    oauth_session = OAuth2Session(hass, entry, implementation)
+
+    # Ensure token is valid
+    await oauth_session.async_ensure_token_valid()
+
     tracked_entities = entry.data.get(CONF_TRACKED_ENTITIES, [])
     enable_demo = entry.data.get(CONF_ENABLE_DEMO, False)
 
-    # Initialize runtime data with API client
-    runtime_data = PlantRangerData(api_key, api_url)
+    # Initialize runtime data with OAuth session
+    runtime_data = PlantRangerData(oauth_session)
     entry.runtime_data = runtime_data
 
     # Get registries for device/entity lookups

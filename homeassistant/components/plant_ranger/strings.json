@@ -1,30 +1,17 @@
 {
   "config": {
     "step": {
-      "user": {
-        "title": "Connect to Plant Ranger",
-        "description": "Configure Plant Ranger to receive sensor data from Home Assistant and provide plant care recommendations.",
-        "data": {
-          "api_key": "API key",
-          "api_url": "API URL",
-          "tracked_entities": "Plant sensors to track",
-          "enable_demo": "Enable demo mode"
-        },
-        "data_description": {
-          "api_key": "Your Plant Ranger API key from your account settings.",
-          "api_url": "The Plant Ranger API endpoint URL.",
-          "tracked_entities": "Select the plant sensor entities you want to send to Plant Ranger for analysis.",
-          "enable_demo": "Create fake plant sensors for testing and development."
-        }
+      "reauth_confirm": {
+        "title": "Reauthenticate Plant Ranger",
+        "description": "The Plant Ranger integration needs to be reauthenticated."
       }
     },
-    "error": {
-      "cannot_connect": "Failed to connect to Plant Ranger",
-      "invalid_auth": "Invalid API key",
-      "unknown": "Unexpected error"
-    },
     "abort": {
-      "already_configured": "Service is already configured"
+      "already_configured": "Account is already configured",
+      "oauth_error": "OAuth authentication failed"
     }
+  },
+  "application_credentials": {
+    "description": "To use Plant Ranger, you need to register an OAuth application. Follow these steps:\n\n1. Go to the [Plant Ranger Developer Dashboard]({developer_dashboard_url})\n2. Create a new OAuth application\n3. Set the redirect URI to:\n   `{redirect_url}`\n4. Copy the Client ID and Client Secret below"
   }
 }
