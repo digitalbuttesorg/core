@@ -1,0 +1,46 @@
+rules:
+  # Bronze (mandatory)
+  action-setup:
+    status: exempt
+    comment: Integration does not register custom actions
+  appropriate-polling:
+    status: exempt
+    comment: Integration stub does not yet implement polling
+  brands: done
+  common-modules: done
+  config-flow-test-coverage:
+    status: exempt
+    comment: Integration stub - tests will be added during implementation
+  config-flow: done
+  dependency-transparency: done
+  docs-actions:
+    status: exempt
+    comment: Integration does not register custom actions
+  docs-high-level-description:
+    status: exempt
+    comment: Integration stub - documentation will be added during implementation
+  docs-installation-instructions:
+    status: exempt
+    comment: Integration stub - documentation will be added during implementation
+  docs-removal-instructions:
+    status: exempt
+    comment: Integration stub - documentation will be added during implementation
+  entity-event-setup:
+    status: exempt
+    comment: Integration does not explicitly subscribe to events
+  entity-unique-id:
+    status: exempt
+    comment: Integration stub does not yet create entities
+  has-entity-name:
+    status: exempt
+    comment: Integration stub does not yet create entities
+  runtime-data: done
+  test-before-configure:
+    status: exempt
+    comment: Integration stub - tests will be added during implementation
+  test-before-setup:
+    status: exempt
+    comment: Integration stub - tests will be added during implementation
+  unique-config-entry:
+    status: exempt
+    comment: Integration stub - will be implemented when API integration is added

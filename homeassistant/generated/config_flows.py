@@ -500,6 +500,7 @@ FLOWS = {
         "picnic",
         "ping",
         "plaato",
+        "plant_ranger",
         "playstation_network",
         "plex",
         "plugwise",

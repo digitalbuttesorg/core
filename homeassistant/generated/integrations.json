@@ -5094,6 +5094,12 @@
       "integration_type": "hub",
       "config_flow": false
     },
+    "plant_ranger": {
+      "name": "Plant Ranger",
+      "integration_type": "service",
+      "config_flow": true,
+      "iot_class": "cloud_polling"
+    },
     "plex": {
       "name": "Plex Media Server",
       "integration_type": "hub",
