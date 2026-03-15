@@ -1,14 +1,53 @@
 """Provides triggers for lights."""
 
+from typing import Any
+
 from homeassistant.const import STATE_OFF, STATE_ON
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.trigger import Trigger, make_entity_state_trigger
+from homeassistant.helpers.automation import NumericalDomainSpec
+from homeassistant.helpers.trigger import (
+    EntityNumericalStateAttributeChangedTriggerBase,
+    EntityNumericalStateAttributeCrossedThresholdTriggerBase,
+    Trigger,
+    make_entity_target_state_trigger,
+)
 
+from . import ATTR_BRIGHTNESS
 from .const import DOMAIN
 
+
+def _convert_uint8_to_percentage(value: Any) -> float:
+    """Convert a uint8 value (0-255) to a percentage (0-100)."""
+    return (float(value) / 255.0) * 100.0
+
+
+BRIGHTNESS_DOMAIN_SPECS = {
+    DOMAIN: NumericalDomainSpec(
+        value_source=ATTR_BRIGHTNESS,
+        value_converter=_convert_uint8_to_percentage,
+    ),
+}
+
+
+class BrightnessChangedTrigger(EntityNumericalStateAttributeChangedTriggerBase):
+    """Trigger for brightness changed."""
+
+    _domain_specs = BRIGHTNESS_DOMAIN_SPECS
+
+
+class BrightnessCrossedThresholdTrigger(
+    EntityNumericalStateAttributeCrossedThresholdTriggerBase
+):
+    """Trigger for brightness crossed threshold."""
+
+    _domain_specs = BRIGHTNESS_DOMAIN_SPECS
+
+
 TRIGGERS: dict[str, type[Trigger]] = {
-    "turned_off": make_entity_state_trigger(DOMAIN, STATE_OFF),
-    "turned_on": make_entity_state_trigger(DOMAIN, STATE_ON),
+    "brightness_changed": BrightnessChangedTrigger,
+    "brightness_crossed_threshold": BrightnessCrossedThresholdTrigger,
+    "turned_off": make_entity_target_state_trigger(DOMAIN, STATE_OFF),
+    "turned_on": make_entity_target_state_trigger(DOMAIN, STATE_ON),
 }
 
 
