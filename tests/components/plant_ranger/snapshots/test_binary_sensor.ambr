@@ -32,7 +32,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-1-low_battery',
+    'unique_id': 'team-1-plant-1-low_battery',
     'unit_of_measurement': None,
   })
 # ---
@@ -83,7 +83,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'conductivity_alert',
-    'unique_id': '01J0000000000000000000PLANT-plant-1-conductivity_alert',
+    'unique_id': 'team-1-plant-1-conductivity_alert',
     'unit_of_measurement': None,
   })
 # ---
@@ -134,7 +134,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-1-connectivity',
+    'unique_id': 'team-1-plant-1-connectivity',
     'unit_of_measurement': None,
   })
 # ---
@@ -185,7 +185,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'humidity_alert',
-    'unique_id': '01J0000000000000000000PLANT-plant-1-humidity_alert',
+    'unique_id': 'team-1-plant-1-humidity_alert',
     'unit_of_measurement': None,
   })
 # ---
@@ -236,7 +236,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'light_alert',
-    'unique_id': '01J0000000000000000000PLANT-plant-1-light_alert',
+    'unique_id': 'team-1-plant-1-light_alert',
     'unit_of_measurement': None,
   })
 # ---
@@ -287,7 +287,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'moisture_alert',
-    'unique_id': '01J0000000000000000000PLANT-plant-1-moisture_alert',
+    'unique_id': 'team-1-plant-1-moisture_alert',
     'unit_of_measurement': None,
   })
 # ---
@@ -338,7 +338,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'needs_water',
-    'unique_id': '01J0000000000000000000PLANT-plant-1-needs_water',
+    'unique_id': 'team-1-plant-1-needs_water',
     'unit_of_measurement': None,
   })
 # ---
@@ -389,7 +389,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'out_of_range',
-    'unique_id': '01J0000000000000000000PLANT-plant-1-out_of_range',
+    'unique_id': 'team-1-plant-1-out_of_range',
     'unit_of_measurement': None,
   })
 # ---
@@ -440,7 +440,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'rssi_alert',
-    'unique_id': '01J0000000000000000000PLANT-plant-1-rssi_alert',
+    'unique_id': 'team-1-plant-1-rssi_alert',
     'unit_of_measurement': None,
   })
 # ---
@@ -491,7 +491,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'temperature_alert',
-    'unique_id': '01J0000000000000000000PLANT-plant-1-temperature_alert',
+    'unique_id': 'team-1-plant-1-temperature_alert',
     'unit_of_measurement': None,
   })
 # ---
@@ -542,7 +542,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-2-low_battery',
+    'unique_id': 'team-1-plant-2-low_battery',
     'unit_of_measurement': None,
   })
 # ---
@@ -593,7 +593,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'conductivity_alert',
-    'unique_id': '01J0000000000000000000PLANT-plant-2-conductivity_alert',
+    'unique_id': 'team-1-plant-2-conductivity_alert',
     'unit_of_measurement': None,
   })
 # ---
@@ -644,7 +644,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-2-connectivity',
+    'unique_id': 'team-1-plant-2-connectivity',
     'unit_of_measurement': None,
   })
 # ---
@@ -695,7 +695,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'humidity_alert',
-    'unique_id': '01J0000000000000000000PLANT-plant-2-humidity_alert',
+    'unique_id': 'team-1-plant-2-humidity_alert',
     'unit_of_measurement': None,
   })
 # ---
@@ -746,7 +746,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'light_alert',
-    'unique_id': '01J0000000000000000000PLANT-plant-2-light_alert',
+    'unique_id': 'team-1-plant-2-light_alert',
     'unit_of_measurement': None,
   })
 # ---
@@ -797,7 +797,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'moisture_alert',
-    'unique_id': '01J0000000000000000000PLANT-plant-2-moisture_alert',
+    'unique_id': 'team-1-plant-2-moisture_alert',
     'unit_of_measurement': None,
   })
 # ---
@@ -848,7 +848,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'needs_water',
-    'unique_id': '01J0000000000000000000PLANT-plant-2-needs_water',
+    'unique_id': 'team-1-plant-2-needs_water',
     'unit_of_measurement': None,
   })
 # ---
@@ -899,7 +899,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'out_of_range',
-    'unique_id': '01J0000000000000000000PLANT-plant-2-out_of_range',
+    'unique_id': 'team-1-plant-2-out_of_range',
     'unit_of_measurement': None,
   })
 # ---
@@ -950,7 +950,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'rssi_alert',
-    'unique_id': '01J0000000000000000000PLANT-plant-2-rssi_alert',
+    'unique_id': 'team-1-plant-2-rssi_alert',
     'unit_of_measurement': None,
   })
 # ---
@@ -1001,7 +1001,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'temperature_alert',
-    'unique_id': '01J0000000000000000000PLANT-plant-2-temperature_alert',
+    'unique_id': 'team-1-plant-2-temperature_alert',
     'unit_of_measurement': None,
   })
 # ---
@@ -1052,7 +1052,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-bridge-1-connectivity',
+    'unique_id': 'team-1-bridge-1-connectivity',
     'unit_of_measurement': None,
   })
 # ---

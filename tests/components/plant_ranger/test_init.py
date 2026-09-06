@@ -1,5 +1,6 @@
 """Test the Plant Ranger integration setup."""
 
+import logging
 from unittest.mock import AsyncMock
 
 from freezegun.api import FrozenDateTimeFactory
@@ -12,15 +13,22 @@ from plantranger import (
 import pytest
 from syrupy.assertion import SnapshotAssertion
 
-from homeassistant.components.plant_ranger.const import DOMAIN, SCAN_INTERVAL
+from homeassistant.components.plant_ranger.const import (
+    CONF_TRACKED_ENTITIES,
+    DOMAIN,
+    SCAN_INTERVAL,
+)
 from homeassistant.config_entries import SOURCE_REAUTH, ConfigEntryState
+from homeassistant.const import STATE_UNAVAILABLE, STATE_UNKNOWN
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers import device_registry as dr
+from homeassistant.helpers import device_registry as dr, entity_registry as er
 
 from . import setup_integration
 
 from tests.common import MockConfigEntry, async_fire_time_changed
 from tests.test_util.aiohttp import AiohttpClientMocker
+
+TRACKED_ENTITY_ID = "sensor.monstera_soil"
 
 
 @pytest.mark.usefixtures("mock_client")
@@ -132,3 +140,97 @@ async def test_stale_device_removed(
     assert device_registry.async_get_device_by_identifier(
         (DOMAIN, "plant-1"), mock_config_entry.entry_id
     )
+
+
+@pytest.mark.usefixtures("mock_client")
+async def test_tracked_entity_updates_are_logged(
+    hass: HomeAssistant,
+    mock_config_entry: MockConfigEntry,
+    device_registry: dr.DeviceRegistry,
+    entity_registry: er.EntityRegistry,
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    """Test tracked sensor changes are picked up with their device's MAC."""
+    mock_config_entry.add_to_hass(hass)
+    hass.config_entries.async_update_entry(
+        mock_config_entry,
+        data={
+            **mock_config_entry.data,
+            CONF_TRACKED_ENTITIES: [
+                TRACKED_ENTITY_ID,
+                "sensor.no_device",
+                "sensor.wired",
+                "sensor.no_mac",
+            ],
+        },
+    )
+    other_entry = MockConfigEntry(domain="bthome", entry_id="bthome-entry")
+    other_entry.add_to_hass(hass)
+    device = device_registry.async_get_or_create(
+        config_entry_id=other_entry.entry_id,
+        connections={(dr.CONNECTION_BLUETOOTH, "aa:bb:cc:dd:ee:01")},
+        manufacturer="b-parasite",
+        model="v2",
+        name="Monstera sensor",
+    )
+    entity_registry.async_get_or_create(
+        "sensor",
+        "bthome",
+        "moisture-1",
+        suggested_object_id="monstera_soil",
+        device_id=device.id,
+        config_entry=other_entry,
+    )
+    wired = device_registry.async_get_or_create(
+        config_entry_id=other_entry.entry_id,
+        connections={(dr.CONNECTION_NETWORK_MAC, "10:20:30:40:50:60")},
+        name="Wired sensor",
+    )
+    entity_registry.async_get_or_create(
+        "sensor",
+        "bthome",
+        "wired-1",
+        suggested_object_id="wired",
+        device_id=wired.id,
+        config_entry=other_entry,
+    )
+    no_mac = device_registry.async_get_or_create(
+        config_entry_id=other_entry.entry_id,
+        identifiers={("bthome", "no-mac")},
+        name="Sensor without MAC",
+    )
+    entity_registry.async_get_or_create(
+        "sensor",
+        "bthome",
+        "no-mac-1",
+        suggested_object_id="no_mac",
+        device_id=no_mac.id,
+        config_entry=other_entry,
+    )
+    await setup_integration(hass, mock_config_entry)
+
+    caplog.set_level(logging.DEBUG, logger="homeassistant.components.plant_ranger")
+    hass.states.async_set(TRACKED_ENTITY_ID, "40", {"unit_of_measurement": "%"})
+    hass.states.async_set("sensor.no_device", "1")
+    hass.states.async_set("sensor.wired", "2")
+    hass.states.async_set("sensor.no_mac", "3")
+    hass.states.async_set("sensor.untracked", "1")
+    await hass.async_block_till_done()
+
+    assert (
+        f"Sensor update for {TRACKED_ENTITY_ID} (MAC: aa:bb:cc:dd:ee:01): 40"
+        in caplog.text
+    )
+    assert "Sensor update for sensor.wired (MAC: 10:20:30:40:50:60): 2" in caplog.text
+    assert "Sensor update for sensor.no_device: " in caplog.text
+    assert "Sensor update for sensor.no_mac: " in caplog.text
+    assert "sensor.untracked" not in caplog.text
+
+    # Unchanged (attribute-only), unavailable and unknown states are ignored
+    caplog.clear()
+    hass.states.async_set(TRACKED_ENTITY_ID, "40", {"unit_of_measurement": "%", "x": 1})
+    hass.states.async_set(TRACKED_ENTITY_ID, STATE_UNAVAILABLE)
+    hass.states.async_set(TRACKED_ENTITY_ID, STATE_UNKNOWN)
+    await hass.async_block_till_done()
+
+    assert "Sensor update" not in caplog.text

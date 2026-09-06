@@ -28,9 +28,10 @@ class PlantRangerPlantEntity(CoordinatorEntity[PlantRangerCoordinator]):
         super().__init__(coordinator)
         self._plant_id = plant_id
         self.entity_description = description
-        # Teams can be shared, so the same plant may show up under two accounts.
+        # Scoped by team (the entry's unique id) because a shared plant can appear
+        # under two teams, and it survives removing and re-adding the entry.
         self._attr_unique_id = (
-            f"{coordinator.config_entry.entry_id}-{plant_id}-{description.key}"
+            f"{coordinator.config_entry.unique_id}-{plant_id}-{description.key}"
         )
 
         plant = self.plant
@@ -70,7 +71,7 @@ class PlantRangerBridgeEntity(CoordinatorEntity[PlantRangerCoordinator]):
         self._bridge_id = bridge_id
         self.entity_description = description
         self._attr_unique_id = (
-            f"{coordinator.config_entry.entry_id}-{bridge_id}-{description.key}"
+            f"{coordinator.config_entry.unique_id}-{bridge_id}-{description.key}"
         )
 
         bridge = self.bridge

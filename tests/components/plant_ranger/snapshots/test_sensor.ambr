@@ -34,7 +34,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-1-battery',
+    'unique_id': 'team-1-plant-1-battery',
     'unit_of_measurement': '%',
   })
 # ---
@@ -92,7 +92,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-1-conductivity',
+    'unique_id': 'team-1-plant-1-conductivity',
     'unit_of_measurement': <UnitOfConductivity.MICROSIEMENS_PER_CM: 'μS/cm'>,
   })
 # ---
@@ -147,7 +147,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-1-humidity',
+    'unique_id': 'team-1-plant-1-humidity',
     'unit_of_measurement': '%',
   })
 # ---
@@ -202,7 +202,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-1-illuminance',
+    'unique_id': 'team-1-plant-1-illuminance',
     'unit_of_measurement': 'lx',
   })
 # ---
@@ -255,7 +255,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'last_checkup',
-    'unique_id': '01J0000000000000000000PLANT-plant-1-last_checkup',
+    'unique_id': 'team-1-plant-1-last_checkup',
     'unit_of_measurement': None,
   })
 # ---
@@ -308,7 +308,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-1-moisture',
+    'unique_id': 'team-1-plant-1-moisture',
     'unit_of_measurement': '%',
   })
 # ---
@@ -363,7 +363,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-1-signal_strength',
+    'unique_id': 'team-1-plant-1-signal_strength',
     'unit_of_measurement': 'dBm',
   })
 # ---
@@ -416,7 +416,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'status',
-    'unique_id': '01J0000000000000000000PLANT-plant-1-status',
+    'unique_id': 'team-1-plant-1-status',
     'unit_of_measurement': None,
   })
 # ---
@@ -471,7 +471,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-1-temperature',
+    'unique_id': 'team-1-plant-1-temperature',
     'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
   })
 # ---
@@ -526,7 +526,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-2-battery',
+    'unique_id': 'team-1-plant-2-battery',
     'unit_of_measurement': '%',
   })
 # ---
@@ -584,7 +584,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-2-conductivity',
+    'unique_id': 'team-1-plant-2-conductivity',
     'unit_of_measurement': <UnitOfConductivity.MICROSIEMENS_PER_CM: 'μS/cm'>,
   })
 # ---
@@ -639,7 +639,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-2-humidity',
+    'unique_id': 'team-1-plant-2-humidity',
     'unit_of_measurement': '%',
   })
 # ---
@@ -694,7 +694,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-2-illuminance',
+    'unique_id': 'team-1-plant-2-illuminance',
     'unit_of_measurement': 'lx',
   })
 # ---
@@ -747,7 +747,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'last_checkup',
-    'unique_id': '01J0000000000000000000PLANT-plant-2-last_checkup',
+    'unique_id': 'team-1-plant-2-last_checkup',
     'unit_of_measurement': None,
   })
 # ---
@@ -800,7 +800,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-2-moisture',
+    'unique_id': 'team-1-plant-2-moisture',
     'unit_of_measurement': '%',
   })
 # ---
@@ -855,7 +855,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-2-signal_strength',
+    'unique_id': 'team-1-plant-2-signal_strength',
     'unit_of_measurement': 'dBm',
   })
 # ---
@@ -908,7 +908,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'status',
-    'unique_id': '01J0000000000000000000PLANT-plant-2-status',
+    'unique_id': 'team-1-plant-2-status',
     'unit_of_measurement': None,
   })
 # ---
@@ -963,7 +963,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': None,
-    'unique_id': '01J0000000000000000000PLANT-plant-2-temperature',
+    'unique_id': 'team-1-plant-2-temperature',
     'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
   })
 # ---
