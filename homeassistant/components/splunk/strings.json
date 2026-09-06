@@ -7,7 +7,6 @@
       "invalid_config": "The YAML configuration is invalid and cannot be imported. Please check your configuration.yaml file.",
       "reauth_successful": "[%key:common::config_flow::abort::reauth_successful%]",
       "reconfigure_successful": "[%key:common::config_flow::abort::reconfigure_successful%]",
-      "single_instance_allowed": "[%key:common::config_flow::abort::single_instance_allowed%]",
       "unknown": "[%key:common::config_flow::error::unknown%]"
     },
     "error": {
@@ -33,7 +32,7 @@
           "name": "[%key:common::config_flow::data::name%]",
           "port": "[%key:common::config_flow::data::port%]",
           "ssl": "[%key:common::config_flow::data::ssl%]",
-          "token": "HTTP Event Collector token",
+          "token": "[%key:component::splunk::config::step::user::data::token%]",
           "verify_ssl": "[%key:common::config_flow::data::verify_ssl%]"
         },
         "data_description": {
@@ -72,17 +71,14 @@
     "cannot_connect": {
       "message": "Unable to connect to Splunk at {host}:{port}."
     },
-    "connection_error": {
-      "message": "Unable to connect to Splunk at {host}:{port}: {error}."
-    },
     "invalid_auth": {
       "message": "[%key:common::config_flow::error::invalid_auth%]"
     },
     "timeout_connect": {
       "message": "Connection to Splunk at {host}:{port} timed out."
     },
-    "unexpected_error": {
-      "message": "Unexpected error while connecting to Splunk at {host}:{port}: {error}."
+    "unexpected_connect_error": {
+      "message": "Unexpected error while connecting to Splunk."
     }
   },
   "issues": {

@@ -1,46 +1,51 @@
 """Provides triggers for lights."""
 
-from typing import Any
+from typing import override
 
 from homeassistant.const import STATE_OFF, STATE_ON
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.automation import NumericalDomainSpec
+from homeassistant.core import HomeAssistant, State
+from homeassistant.helpers.automation import DomainSpec
 from homeassistant.helpers.trigger import (
-    EntityNumericalStateAttributeChangedTriggerBase,
-    EntityNumericalStateAttributeCrossedThresholdTriggerBase,
+    EntityNumericalStateChangedTriggerBase,
+    EntityNumericalStateCrossedThresholdTriggerBase,
+    EntityNumericalStateTriggerBase,
     Trigger,
     make_entity_target_state_trigger,
 )
 
-from . import ATTR_BRIGHTNESS
-from .const import DOMAIN
+from .const import DOMAIN, LightEntityStateAttribute
 
-
-def _convert_uint8_to_percentage(value: Any) -> float:
-    """Convert a uint8 value (0-255) to a percentage (0-100)."""
-    return (float(value) / 255.0) * 100.0
-
-
-BRIGHTNESS_DOMAIN_SPECS = {
-    DOMAIN: NumericalDomainSpec(
-        value_source=ATTR_BRIGHTNESS,
-        value_converter=_convert_uint8_to_percentage,
-    ),
+BRIGHTNESS_DOMAIN_SPECS: dict[str, DomainSpec] = {
+    DOMAIN: DomainSpec(value_source=LightEntityStateAttribute.BRIGHTNESS),
 }
 
 
-class BrightnessChangedTrigger(EntityNumericalStateAttributeChangedTriggerBase):
-    """Trigger for brightness changed."""
+class BrightnessTriggerMixin(EntityNumericalStateTriggerBase):
+    """Mixin for brightness triggers."""
 
     _domain_specs = BRIGHTNESS_DOMAIN_SPECS
+    _valid_unit = "%"
+
+    @override
+    def _get_tracked_value(self, state: State) -> float | None:
+        """Get tracked brightness as a percentage."""
+        value = super()._get_tracked_value(state)
+        if value is None:
+            return None
+        # Convert uint8 value (0-255) to a percentage (0-100)
+        return (value / 255.0) * 100.0
+
+
+class BrightnessChangedTrigger(
+    EntityNumericalStateChangedTriggerBase, BrightnessTriggerMixin
+):
+    """Trigger for light brightness changes."""
 
 
 class BrightnessCrossedThresholdTrigger(
-    EntityNumericalStateAttributeCrossedThresholdTriggerBase
+    EntityNumericalStateCrossedThresholdTriggerBase, BrightnessTriggerMixin
 ):
-    """Trigger for brightness crossed threshold."""
-
-    _domain_specs = BRIGHTNESS_DOMAIN_SPECS
+    """Trigger for light brightness crossing a threshold."""
 
 
 TRIGGERS: dict[str, type[Trigger]] = {

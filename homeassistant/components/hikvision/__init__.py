@@ -1,7 +1,5 @@
 """The Hikvision integration."""
 
-from __future__ import annotations
-
 from dataclasses import dataclass, field
 import logging
 from xml.etree.ElementTree import ParseError
@@ -17,9 +15,10 @@ from homeassistant.const import (
     CONF_PORT,
     CONF_SSL,
     CONF_USERNAME,
+    EVENT_HOMEASSISTANT_STOP,
     Platform,
 )
-from homeassistant.core import HomeAssistant
+from homeassistant.core import Event, HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers import device_registry as dr
 
@@ -117,13 +116,21 @@ async def async_setup_entry(hass: HomeAssistant, entry: HikvisionConfigEntry) ->
                 # Map raw event type names to friendly names using SENSOR_MAP
                 mapped_events: dict[str, list[int]] = {}
                 for event_type, channels in nvr_events.items():
-                    friendly_name = SENSOR_MAP.get(event_type.lower(), event_type)
+                    event_key = event_type.lower()
+                    # Skip videoloss - used as watchdog by pyhik, not a real sensor
+                    if event_key == "videoloss":
+                        continue
+                    friendly_name = SENSOR_MAP.get(event_key)
+                    if friendly_name is None:
+                        _LOGGER.debug("Skipping unmapped event type: %s", event_type)
+                        continue
                     if friendly_name in mapped_events:
                         mapped_events[friendly_name].extend(channels)
                     else:
                         mapped_events[friendly_name] = list(channels)
                 _LOGGER.debug("Mapped NVR events: %s", mapped_events)
-                camera.inject_events(mapped_events)
+                if mapped_events:
+                    camera.inject_events(mapped_events)
             else:
                 _LOGGER.debug(
                     "No event triggers returned from %s. "
@@ -135,6 +142,21 @@ async def async_setup_entry(hass: HomeAssistant, entry: HikvisionConfigEntry) ->
 
     # Start the event stream
     await hass.async_add_executor_job(camera.start_stream)
+
+    async def _async_stop_stream(event: Event) -> None:
+        await hass.async_add_executor_job(camera.disconnect)
+
+    # pyHik's stream thread is non-daemonic and publishes straight into hass, so
+    # it has to be joined before the event loop closes. Starting it yields, so
+    # the stop event may already have been fired by the time we get here, and
+    # listening for it now would never hear it.
+    if hass.is_stopping:
+        await hass.async_add_executor_job(camera.disconnect)
+        raise ConfigEntryNotReady("Home Assistant is stopping")
+
+    entry.async_on_unload(
+        hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, _async_stop_stream)
+    )
 
     # Register the main device before platforms that use via_device
     device_registry = dr.async_get(hass)

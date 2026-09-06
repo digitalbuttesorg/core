@@ -1,10 +1,9 @@
 """Support for binary_sensor entities."""
 
-from __future__ import annotations
-
 from dataclasses import dataclass, field
+from typing import override
 
-from gardena_bluetooth.const import Sensor, Valve
+from gardena_bluetooth.const import AquaContour, Sensor, Valve
 from gardena_bluetooth.parse import CharacteristicBool
 
 from homeassistant.components.binary_sensor import (
@@ -29,7 +28,7 @@ class GardenaBluetoothBinarySensorEntityDescription(BinarySensorEntityDescriptio
     @property
     def context(self) -> set[str]:
         """Context needed for update coordinator."""
-        return {self.char.uuid}
+        return {self.char.unique_id}
 
 
 DESCRIPTIONS = (
@@ -46,6 +45,13 @@ DESCRIPTIONS = (
         device_class=BinarySensorDeviceClass.CONNECTIVITY,
         entity_category=EntityCategory.DIAGNOSTIC,
         char=Sensor.connected_state,
+    ),
+    GardenaBluetoothBinarySensorEntityDescription(
+        key=AquaContour.frost_warning.unique_id,
+        translation_key="frost_warning",
+        device_class=BinarySensorDeviceClass.PROBLEM,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        char=AquaContour.frost_warning,
     ),
 )
 
@@ -72,6 +78,7 @@ class GardenaBluetoothBinarySensor(
 
     entity_description: GardenaBluetoothBinarySensorEntityDescription
 
+    @override
     def _handle_coordinator_update(self) -> None:
         char = self.entity_description.char
         self._attr_is_on = self.coordinator.get_cached(char)

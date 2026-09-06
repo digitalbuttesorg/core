@@ -1,9 +1,7 @@
 """Support for Litter-Robot updates."""
 
-from __future__ import annotations
-
 from datetime import timedelta
-from typing import Any
+from typing import Any, override
 
 from pylitterbot import LitterRobot4
 
@@ -39,14 +37,28 @@ async def async_setup_entry(
 ) -> None:
     """Set up Litter-Robot update platform."""
     coordinator = entry.runtime_data
-    entities = (
-        RobotUpdateEntity(
-            robot=robot, coordinator=coordinator, description=FIRMWARE_UPDATE_ENTITY
-        )
-        for robot in coordinator.litter_robots()
-        if isinstance(robot, LitterRobot4)
-    )
-    async_add_entities(entities, True)
+    known_robots: set[str] = set()
+
+    def _check_robots() -> None:
+        all_robots = list(coordinator.litter_robots())
+        current_robots = {robot.serial for robot in all_robots}
+        new_robots = current_robots - known_robots
+        if new_robots:
+            known_robots.update(new_robots)
+            entities = (
+                RobotUpdateEntity(
+                    robot=robot,
+                    coordinator=coordinator,
+                    description=FIRMWARE_UPDATE_ENTITY,
+                )
+                for robot in all_robots
+                if robot.serial in new_robots
+                if isinstance(robot, LitterRobot4)
+            )
+            async_add_entities(entities, True)
+
+    _check_robots()
+    entry.async_on_unload(coordinator.async_add_listener(_check_robots))
 
 
 class RobotUpdateEntity(LitterRobotEntity[LitterRobot4], UpdateEntity):
@@ -58,20 +70,24 @@ class RobotUpdateEntity(LitterRobotEntity[LitterRobot4], UpdateEntity):
     )
 
     @property
+    @override
     def installed_version(self) -> str:
         """Version installed and in use."""
         return self.robot.firmware
 
     @property
+    @override
     def in_progress(self) -> bool:
         """Update installation progress."""
         return self.robot.firmware_update_triggered
 
     @property
+    @override
     def should_poll(self) -> bool:
         """Set polling to True."""
         return True
 
+    @override
     async def async_update(self) -> None:
         """Update the entity."""
         # If the robot has a firmware update already in progress, checking for the
@@ -84,6 +100,7 @@ class RobotUpdateEntity(LitterRobotEntity[LitterRobot4], UpdateEntity):
             self._attr_latest_version = latest_version
 
     @whisker_command
+    @override
     async def async_install(
         self, version: str | None, backup: bool, **kwargs: Any
     ) -> None:

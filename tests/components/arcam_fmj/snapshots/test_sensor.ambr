@@ -1,11 +1,12 @@
 # serializer version: 1
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_incoming_audio_configuration-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'options': list([
+      <SensorEntityCapabilityAttribute.OPTIONS: 'options'>: list([
         'dual_mono',
         'mono',
         'stereo_only',
@@ -84,9 +85,9 @@
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_incoming_audio_configuration-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'device_class': 'enum',
-      'friendly_name': 'Arcam FMJ (127.0.0.1) Incoming audio configuration',
-      'options': list([
+      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'enum',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Arcam FMJ (127.0.0.1) Incoming audio configuration',
+      <SensorEntityCapabilityAttribute.OPTIONS: 'options'>: list([
         'dual_mono',
         'mono',
         'stereo_only',
@@ -142,11 +143,12 @@
 # ---
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_incoming_audio_format-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'options': list([
+      <SensorEntityCapabilityAttribute.OPTIONS: 'options'>: list([
         'pcm',
         'analogue_direct',
         'dolby_digital',
@@ -206,9 +208,9 @@
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_incoming_audio_format-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'device_class': 'enum',
-      'friendly_name': 'Arcam FMJ (127.0.0.1) Incoming audio format',
-      'options': list([
+      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'enum',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Arcam FMJ (127.0.0.1) Incoming audio format',
+      <SensorEntityCapabilityAttribute.OPTIONS: 'options'>: list([
         'pcm',
         'analogue_direct',
         'dolby_digital',
@@ -245,11 +247,12 @@
 # ---
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_incoming_audio_sample_rate-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
     }),
     'config_entry_id': <ANY>,
     'config_subentry_id': <ANY>,
@@ -287,10 +290,10 @@
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_incoming_audio_sample_rate-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'device_class': 'frequency',
-      'friendly_name': 'Arcam FMJ (127.0.0.1) Incoming audio sample rate',
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': <UnitOfFrequency.HERTZ: 'Hz'>,
+      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'frequency',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Arcam FMJ (127.0.0.1) Incoming audio sample rate',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: <UnitOfFrequency.HERTZ: 'Hz'>,
     }),
     'context': <ANY>,
     'entity_id': 'sensor.arcam_fmj_127_0_0_1_incoming_audio_sample_rate',
@@ -302,11 +305,12 @@
 # ---
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_incoming_video_aspect_ratio-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'options': list([
+      <SensorEntityCapabilityAttribute.OPTIONS: 'options'>: list([
         'undefined',
         'aspect_4_3',
         'aspect_16_9',
@@ -345,9 +349,9 @@
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_incoming_video_aspect_ratio-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'device_class': 'enum',
-      'friendly_name': 'Arcam FMJ (127.0.0.1) Incoming video aspect ratio',
-      'options': list([
+      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'enum',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Arcam FMJ (127.0.0.1) Incoming video aspect ratio',
+      <SensorEntityCapabilityAttribute.OPTIONS: 'options'>: list([
         'undefined',
         'aspect_4_3',
         'aspect_16_9',
@@ -363,11 +367,12 @@
 # ---
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_incoming_video_colorspace-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'options': list([
+      <SensorEntityCapabilityAttribute.OPTIONS: 'options'>: list([
         'normal',
         'hdr10',
         'dolby_vision',
@@ -408,9 +413,9 @@
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_incoming_video_colorspace-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'device_class': 'enum',
-      'friendly_name': 'Arcam FMJ (127.0.0.1) Incoming video colorspace',
-      'options': list([
+      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'enum',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Arcam FMJ (127.0.0.1) Incoming video colorspace',
+      <SensorEntityCapabilityAttribute.OPTIONS: 'options'>: list([
         'normal',
         'hdr10',
         'dolby_vision',
@@ -428,11 +433,12 @@
 # ---
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_incoming_video_horizontal_resolution-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
     }),
     'config_entry_id': <ANY>,
     'config_subentry_id': <ANY>,
@@ -470,9 +476,9 @@
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_incoming_video_horizontal_resolution-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Arcam FMJ (127.0.0.1) Incoming video horizontal resolution',
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': 'px',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Arcam FMJ (127.0.0.1) Incoming video horizontal resolution',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: 'px',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.arcam_fmj_127_0_0_1_incoming_video_horizontal_resolution',
@@ -484,11 +490,12 @@
 # ---
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_incoming_video_refresh_rate-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
     }),
     'config_entry_id': <ANY>,
     'config_subentry_id': <ANY>,
@@ -526,10 +533,10 @@
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_incoming_video_refresh_rate-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'device_class': 'frequency',
-      'friendly_name': 'Arcam FMJ (127.0.0.1) Incoming video refresh rate',
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': <UnitOfFrequency.HERTZ: 'Hz'>,
+      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'frequency',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Arcam FMJ (127.0.0.1) Incoming video refresh rate',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: <UnitOfFrequency.HERTZ: 'Hz'>,
     }),
     'context': <ANY>,
     'entity_id': 'sensor.arcam_fmj_127_0_0_1_incoming_video_refresh_rate',
@@ -541,11 +548,12 @@
 # ---
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_incoming_video_vertical_resolution-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
     }),
     'config_entry_id': <ANY>,
     'config_subentry_id': <ANY>,
@@ -583,9 +591,9 @@
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_incoming_video_vertical_resolution-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Arcam FMJ (127.0.0.1) Incoming video vertical resolution',
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': 'px',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Arcam FMJ (127.0.0.1) Incoming video vertical resolution',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: 'px',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.arcam_fmj_127_0_0_1_incoming_video_vertical_resolution',
@@ -597,11 +605,12 @@
 # ---
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_zone_2_incoming_audio_configuration-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'options': list([
+      <SensorEntityCapabilityAttribute.OPTIONS: 'options'>: list([
         'dual_mono',
         'mono',
         'stereo_only',
@@ -680,9 +689,9 @@
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_zone_2_incoming_audio_configuration-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'device_class': 'enum',
-      'friendly_name': 'Arcam FMJ (127.0.0.1) Zone 2 Incoming audio configuration',
-      'options': list([
+      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'enum',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Arcam FMJ (127.0.0.1) Zone 2 Incoming audio configuration',
+      <SensorEntityCapabilityAttribute.OPTIONS: 'options'>: list([
         'dual_mono',
         'mono',
         'stereo_only',
@@ -738,11 +747,12 @@
 # ---
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_zone_2_incoming_audio_format-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'options': list([
+      <SensorEntityCapabilityAttribute.OPTIONS: 'options'>: list([
         'pcm',
         'analogue_direct',
         'dolby_digital',
@@ -802,9 +812,9 @@
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_zone_2_incoming_audio_format-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'device_class': 'enum',
-      'friendly_name': 'Arcam FMJ (127.0.0.1) Zone 2 Incoming audio format',
-      'options': list([
+      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'enum',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Arcam FMJ (127.0.0.1) Zone 2 Incoming audio format',
+      <SensorEntityCapabilityAttribute.OPTIONS: 'options'>: list([
         'pcm',
         'analogue_direct',
         'dolby_digital',
@@ -841,11 +851,12 @@
 # ---
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_zone_2_incoming_audio_sample_rate-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
     }),
     'config_entry_id': <ANY>,
     'config_subentry_id': <ANY>,
@@ -883,10 +894,10 @@
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_zone_2_incoming_audio_sample_rate-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'device_class': 'frequency',
-      'friendly_name': 'Arcam FMJ (127.0.0.1) Zone 2 Incoming audio sample rate',
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': <UnitOfFrequency.HERTZ: 'Hz'>,
+      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'frequency',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Arcam FMJ (127.0.0.1) Zone 2 Incoming audio sample rate',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: <UnitOfFrequency.HERTZ: 'Hz'>,
     }),
     'context': <ANY>,
     'entity_id': 'sensor.arcam_fmj_127_0_0_1_zone_2_incoming_audio_sample_rate',
@@ -898,11 +909,12 @@
 # ---
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_zone_2_incoming_video_aspect_ratio-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'options': list([
+      <SensorEntityCapabilityAttribute.OPTIONS: 'options'>: list([
         'undefined',
         'aspect_4_3',
         'aspect_16_9',
@@ -941,9 +953,9 @@
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_zone_2_incoming_video_aspect_ratio-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'device_class': 'enum',
-      'friendly_name': 'Arcam FMJ (127.0.0.1) Zone 2 Incoming video aspect ratio',
-      'options': list([
+      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'enum',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Arcam FMJ (127.0.0.1) Zone 2 Incoming video aspect ratio',
+      <SensorEntityCapabilityAttribute.OPTIONS: 'options'>: list([
         'undefined',
         'aspect_4_3',
         'aspect_16_9',
@@ -959,11 +971,12 @@
 # ---
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_zone_2_incoming_video_colorspace-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'options': list([
+      <SensorEntityCapabilityAttribute.OPTIONS: 'options'>: list([
         'normal',
         'hdr10',
         'dolby_vision',
@@ -1004,9 +1017,9 @@
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_zone_2_incoming_video_colorspace-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'device_class': 'enum',
-      'friendly_name': 'Arcam FMJ (127.0.0.1) Zone 2 Incoming video colorspace',
-      'options': list([
+      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'enum',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Arcam FMJ (127.0.0.1) Zone 2 Incoming video colorspace',
+      <SensorEntityCapabilityAttribute.OPTIONS: 'options'>: list([
         'normal',
         'hdr10',
         'dolby_vision',
@@ -1024,11 +1037,12 @@
 # ---
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_zone_2_incoming_video_horizontal_resolution-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
     }),
     'config_entry_id': <ANY>,
     'config_subentry_id': <ANY>,
@@ -1066,9 +1080,9 @@
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_zone_2_incoming_video_horizontal_resolution-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Arcam FMJ (127.0.0.1) Zone 2 Incoming video horizontal resolution',
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': 'px',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Arcam FMJ (127.0.0.1) Zone 2 Incoming video horizontal resolution',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: 'px',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.arcam_fmj_127_0_0_1_zone_2_incoming_video_horizontal_resolution',
@@ -1080,11 +1094,12 @@
 # ---
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_zone_2_incoming_video_refresh_rate-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
     }),
     'config_entry_id': <ANY>,
     'config_subentry_id': <ANY>,
@@ -1122,10 +1137,10 @@
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_zone_2_incoming_video_refresh_rate-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'device_class': 'frequency',
-      'friendly_name': 'Arcam FMJ (127.0.0.1) Zone 2 Incoming video refresh rate',
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': <UnitOfFrequency.HERTZ: 'Hz'>,
+      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'frequency',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Arcam FMJ (127.0.0.1) Zone 2 Incoming video refresh rate',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: <UnitOfFrequency.HERTZ: 'Hz'>,
     }),
     'context': <ANY>,
     'entity_id': 'sensor.arcam_fmj_127_0_0_1_zone_2_incoming_video_refresh_rate',
@@ -1137,11 +1152,12 @@
 # ---
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_zone_2_incoming_video_vertical_resolution-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
     }),
     'config_entry_id': <ANY>,
     'config_subentry_id': <ANY>,
@@ -1179,9 +1195,9 @@
 # name: test_setup[sensor.arcam_fmj_127_0_0_1_zone_2_incoming_video_vertical_resolution-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Arcam FMJ (127.0.0.1) Zone 2 Incoming video vertical resolution',
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': 'px',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Arcam FMJ (127.0.0.1) Zone 2 Incoming video vertical resolution',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: 'px',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.arcam_fmj_127_0_0_1_zone_2_incoming_video_vertical_resolution',
