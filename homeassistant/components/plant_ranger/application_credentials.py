@@ -1,34 +1,32 @@
 """Application credentials platform for Plant Ranger."""
 
-from homeassistant.components.application_credentials import (
-    AuthImplementation,
-    AuthorizationServer,
-    ClientCredential,
-)
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers import config_entry_oauth2_flow
+from plantranger import OAUTH2_AUTHORIZE, OAUTH2_TOKEN
 
-from .const import DOMAIN, OAUTH2_AUTHORIZE, OAUTH2_TOKEN
+from homeassistant.components.application_credentials import ClientCredential
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.config_entry_oauth2_flow import (
+    AbstractOAuth2Implementation,
+    LocalOAuth2ImplementationWithPkce,
+)
 
 
 async def async_get_auth_implementation(
     hass: HomeAssistant, auth_domain: str, credential: ClientCredential
-) -> config_entry_oauth2_flow.AbstractOAuth2Implementation:
-    """Return auth implementation."""
-    return config_entry_oauth2_flow.LocalOAuth2Implementation(
+) -> AbstractOAuth2Implementation:
+    """Return a PKCE implementation so the built-in client needs no secret."""
+    return LocalOAuth2ImplementationWithPkce(
         hass,
-        DOMAIN,
-        credential,
-        authorization_server=AuthorizationServer(
-            authorize_url=OAUTH2_AUTHORIZE,
-            token_url=OAUTH2_TOKEN,
-        ),
+        auth_domain,
+        credential.client_id,
+        OAUTH2_AUTHORIZE,
+        OAUTH2_TOKEN,
+        credential.client_secret,
     )
 
 
 async def async_get_description_placeholders(hass: HomeAssistant) -> dict[str, str]:
     """Return description placeholders for the credentials dialog."""
     return {
-        "developer_dashboard_url": "https://api.plantranger.com/developer",
+        "developer_dashboard_url": "https://www.plantranger.com/settings/api",
         "redirect_url": "https://my.home-assistant.io/redirect/oauth",
     }

@@ -1,17 +1,91 @@
 {
+  "application_credentials": {
+    "description": "Plant Ranger comes with a built-in Home Assistant client, so you normally do not need to enter anything here. To use your own OAuth application instead, create one in the [Plant Ranger Developer Dashboard]({developer_dashboard_url}) with the redirect URI `{redirect_url}` and enter its Client ID below. The Client Secret can be left empty."
+  },
   "config": {
-    "step": {
-      "reauth_confirm": {
-        "title": "Reauthenticate Plant Ranger",
-        "description": "The Plant Ranger integration needs to be reauthenticated."
-      }
-    },
     "abort": {
-      "already_configured": "Account is already configured",
-      "oauth_error": "OAuth authentication failed"
+      "already_configured": "[%key:common::config_flow::abort::already_configured_account%]",
+      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+      "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
+      "missing_configuration": "[%key:common::config_flow::abort::oauth2_missing_configuration%]",
+      "no_team": "The authorized token does not grant access to a Plant Ranger team.",
+      "reauth_successful": "[%key:common::config_flow::abort::reauth_successful%]",
+      "reconfigure_successful": "[%key:common::config_flow::abort::reconfigure_successful%]",
+      "wrong_account": "Wrong account: Please authenticate with the account this entry was set up with."
+    },
+    "create_entry": {
+      "default": "[%key:common::config_flow::create_entry::authenticated%]"
+    },
+    "step": {
+      "pick_implementation": {
+        "data": {
+          "implementation": "[%key:common::config_flow::data::implementation%]"
+        },
+        "data_description": {
+          "implementation": "[%key:common::config_flow::description::implementation%]"
+        },
+        "title": "[%key:common::config_flow::title::oauth2_pick_implementation%]"
+      },
+      "reauth_confirm": {
+        "description": "The Plant Ranger integration needs to re-authenticate your account.",
+        "title": "[%key:common::config_flow::title::reauth%]"
+      }
     }
   },
-  "application_credentials": {
-    "description": "To use Plant Ranger, you need to register an OAuth application. Follow these steps:\n\n1. Go to the [Plant Ranger Developer Dashboard]({developer_dashboard_url})\n2. Create a new OAuth application\n3. Set the redirect URI to:\n   `{redirect_url}`\n4. Copy the Client ID and Client Secret below"
+  "entity": {
+    "binary_sensor": {
+      "conductivity_alert": {
+        "name": "Conductivity alert"
+      },
+      "humidity_alert": {
+        "name": "Humidity alert"
+      },
+      "light_alert": {
+        "name": "Light alert"
+      },
+      "moisture_alert": {
+        "name": "Moisture alert"
+      },
+      "needs_water": {
+        "name": "Needs water"
+      },
+      "out_of_range": {
+        "name": "Out of range"
+      },
+      "rssi_alert": {
+        "name": "Signal alert"
+      },
+      "temperature_alert": {
+        "name": "Temperature alert"
+      }
+    },
+    "sensor": {
+      "last_checkup": {
+        "name": "Last checkup"
+      },
+      "status": {
+        "name": "Status"
+      }
+    }
+  },
+  "exceptions": {
+    "auth_failed": {
+      "message": "Authentication with Plant Ranger failed, please re-authenticate."
+    },
+    "cannot_connect": {
+      "message": "Could not reach Plant Ranger: {error}"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "enable_demo": "Add a demo plant"
+        },
+        "data_description": {
+          "enable_demo": "Creates a fake plant with changing readings so the integration can be tried without hardware."
+        }
+      }
+    }
   }
 }

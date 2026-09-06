@@ -1,46 +1,88 @@
 rules:
-  # Bronze (mandatory)
+  # Bronze
   action-setup:
     status: exempt
     comment: Integration does not register custom actions
-  appropriate-polling:
+  appropriate-polling: done
+  brands:
     status: exempt
-    comment: Integration stub does not yet implement polling
-  brands: done
+    comment: Pending the docs and brands pull requests, see PLAN.md
   common-modules: done
-  config-flow-test-coverage:
-    status: exempt
-    comment: Integration stub - tests will be added during implementation
+  config-flow-test-coverage: done
   config-flow: done
   dependency-transparency: done
+  docs-conditions:
+    status: exempt
+    comment: Pending the docs and brands pull requests, see PLAN.md
   docs-actions:
     status: exempt
     comment: Integration does not register custom actions
   docs-high-level-description:
     status: exempt
-    comment: Integration stub - documentation will be added during implementation
+    comment: Pending the docs and brands pull requests, see PLAN.md
   docs-installation-instructions:
     status: exempt
-    comment: Integration stub - documentation will be added during implementation
+    comment: Pending the docs and brands pull requests, see PLAN.md
   docs-removal-instructions:
     status: exempt
-    comment: Integration stub - documentation will be added during implementation
+    comment: Pending the docs and brands pull requests, see PLAN.md
+  docs-triggers:
+    status: exempt
+    comment: Pending the docs and brands pull requests, see PLAN.md
   entity-event-setup:
     status: exempt
-    comment: Integration does not explicitly subscribe to events
-  entity-unique-id:
-    status: exempt
-    comment: Integration stub does not yet create entities
-  has-entity-name:
-    status: exempt
-    comment: Integration stub does not yet create entities
+    comment: Entities are updated through the coordinator, not subscriptions
+  entity-unique-id: done
+  has-entity-name: done
   runtime-data: done
-  test-before-configure:
+  test-before-configure: done
+  test-before-setup: done
+  unique-config-entry: done
+
+  # Silver
+  action-exceptions:
     status: exempt
-    comment: Integration stub - tests will be added during implementation
-  test-before-setup:
+    comment: Integration does not register custom actions
+  config-entry-unloading: done
+  docs-configuration-parameters: todo
+  docs-installation-parameters: todo
+  entity-unavailable: done
+  integration-owner: done
+  log-when-unavailable: done
+  parallel-updates: done
+  reauthentication-flow: done
+  test-coverage: todo
+
+  # Gold
+  devices: done
+  diagnostics: done
+  discovery-update-info:
     status: exempt
-    comment: Integration stub - tests will be added during implementation
-  unique-config-entry:
+    comment: Cloud service, nothing to discover locally
+  discovery:
     status: exempt
-    comment: Integration stub - will be implemented when API integration is added
+    comment: Cloud service, nothing to discover locally
+  docs-data-update: todo
+  docs-examples: todo
+  docs-known-limitations: todo
+  docs-supported-devices: todo
+  docs-supported-functions: todo
+  docs-troubleshooting: todo
+  docs-use-cases: todo
+  dynamic-devices: done
+  entity-category: done
+  entity-device-class: done
+  entity-disabled-by-default: done
+  entity-translations: done
+  exception-translations: done
+  icon-translations: done
+  reconfiguration-flow: done
+  repair-issues:
+    status: exempt
+    comment: No user-actionable repairs identified yet
+  stale-devices: done
+
+  # Platinum
+  async-dependency: done
+  inject-websession: done
+  strict-typing: todo

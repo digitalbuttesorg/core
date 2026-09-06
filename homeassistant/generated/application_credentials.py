@@ -37,6 +37,7 @@ APPLICATION_CREDENTIALS = [
     "onedrive",
     "onedrive_for_business",
     "overkiz",
+    "plant_ranger",
     "point",
     "senz",
     "smartthings",

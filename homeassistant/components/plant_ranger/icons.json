@@ -1,0 +1,62 @@
+{
+  "entity": {
+    "binary_sensor": {
+      "conductivity_alert": {
+        "default": "mdi:flash",
+        "state": {
+          "on": "mdi:flash-alert"
+        }
+      },
+      "humidity_alert": {
+        "default": "mdi:air-humidifier",
+        "state": {
+          "on": "mdi:air-humidifier-off"
+        }
+      },
+      "light_alert": {
+        "default": "mdi:white-balance-sunny",
+        "state": {
+          "on": "mdi:weather-sunny-alert"
+        }
+      },
+      "moisture_alert": {
+        "default": "mdi:water-percent",
+        "state": {
+          "on": "mdi:water-percent-alert"
+        }
+      },
+      "needs_water": {
+        "default": "mdi:water-check",
+        "state": {
+          "on": "mdi:water-alert"
+        }
+      },
+      "out_of_range": {
+        "default": "mdi:signal",
+        "state": {
+          "on": "mdi:signal-off"
+        }
+      },
+      "rssi_alert": {
+        "default": "mdi:wifi",
+        "state": {
+          "on": "mdi:wifi-alert"
+        }
+      },
+      "temperature_alert": {
+        "default": "mdi:thermometer",
+        "state": {
+          "on": "mdi:thermometer-alert"
+        }
+      }
+    },
+    "sensor": {
+      "last_checkup": {
+        "default": "mdi:calendar-check"
+      },
+      "status": {
+        "default": "mdi:sprout"
+      }
+    }
+  }
+}

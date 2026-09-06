@@ -7,6 +7,7 @@
   "documentation": "https://www.home-assistant.io/integrations/plant_ranger",
   "integration_type": "service",
   "iot_class": "cloud_polling",
+  "loggers": ["plantranger"],
   "quality_scale": "bronze",
-  "requirements": []
+  "requirements": ["plantranger==0.1.0"]
 }

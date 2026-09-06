@@ -1902,6 +1902,9 @@ phone-modem==0.1.1
 # homeassistant.components.remote_rpi_gpio
 pigpio==1.78
 
+# homeassistant.components.plant_ranger
+plantranger==0.1.0
+
 # homeassistant.components.plex
 plexauth==0.0.6
 

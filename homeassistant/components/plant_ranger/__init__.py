@@ -1,13 +1,31 @@
 """The Plant Ranger integration."""
 
-from __future__ import annotations
-
 import logging
 from typing import Any
 
-from homeassistant.const import CONF_ACCESS_TOKEN, EVENT_STATE_CHANGED, Platform
-from homeassistant.core import Event, HomeAssistant, State, callback
-from homeassistant.helpers import config_validation as cv, device_registry as dr, entity_registry as er
+from aiohttp import ClientError
+from plantranger import PlantRangerClient
+
+from homeassistant.const import EVENT_STATE_CHANGED, Platform
+from homeassistant.core import (
+    Event,
+    EventStateChangedData,
+    HomeAssistant,
+    State,
+    callback,
+)
+from homeassistant.exceptions import (
+    ConfigEntryAuthFailed,
+    ConfigEntryNotReady,
+    OAuth2TokenRequestError,
+    OAuth2TokenRequestReauthError,
+)
+from homeassistant.helpers import (
+    config_validation as cv,
+    device_registry as dr,
+    entity_registry as er,
+)
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.config_entry_oauth2_flow import (
     OAuth2Session,
     async_get_config_entry_implementation,
@@ -18,67 +36,59 @@ from homeassistant.helpers.device_registry import (
 )
 from homeassistant.helpers.typing import ConfigType
 
-from .const import (
-    CONF_ENABLE_DEMO,
-    CONF_TRACKED_ENTITIES,
-    DOMAIN,
-)
-from .types import PlantRangerConfigEntry
+from .api import AsyncConfigEntryAuth, async_import_built_in_credential
+from .const import CONF_TRACKED_ENTITIES, DOMAIN
+from .coordinator import PlantRangerConfigEntry, PlantRangerCoordinator
 
 _LOGGER = logging.getLogger(__name__)
 
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
-
-class PlantRangerData:
-    """Runtime data for Plant Ranger integration."""
-
-    def __init__(self, oauth_session: OAuth2Session) -> None:
-        """Initialize the Plant Ranger data."""
-        self.oauth_session = oauth_session
-        # TODO: Initialize actual API client with OAuth token
-        # self.client = PlantRangerClient(oauth_session)
+PLATFORMS = [Platform.BINARY_SENSOR, Platform.SENSOR]
 
 
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     """Set up the Plant Ranger component."""
+    await async_import_built_in_credential(hass)
     return True
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: PlantRangerConfigEntry) -> bool:
     """Set up Plant Ranger from a config entry."""
     implementation = await async_get_config_entry_implementation(hass, entry)
-    oauth_session = OAuth2Session(hass, entry, implementation)
+    auth = AsyncConfigEntryAuth(
+        async_get_clientsession(hass), OAuth2Session(hass, entry, implementation)
+    )
 
-    # Ensure token is valid
-    await oauth_session.async_ensure_token_valid()
+    try:
+        await auth.async_get_access_token()
+    except OAuth2TokenRequestReauthError as err:
+        raise ConfigEntryAuthFailed(
+            translation_domain=DOMAIN, translation_key="auth_failed"
+        ) from err
+    except (OAuth2TokenRequestError, ClientError) as err:
+        raise ConfigEntryNotReady(
+            translation_domain=DOMAIN,
+            translation_key="cannot_connect",
+            translation_placeholders={"error": str(err)},
+        ) from err
+
+    coordinator = PlantRangerCoordinator(hass, entry, PlantRangerClient(auth))
+    await coordinator.async_config_entry_first_refresh()
+    entry.runtime_data = coordinator
+
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    entry.async_on_unload(entry.add_update_listener(_async_update_listener))
 
     tracked_entities = entry.data.get(CONF_TRACKED_ENTITIES, [])
-    enable_demo = entry.data.get(CONF_ENABLE_DEMO, False)
-
-    # Initialize runtime data with OAuth session
-    runtime_data = PlantRangerData(oauth_session)
-    entry.runtime_data = runtime_data
-
-    # Get registries for device/entity lookups
     entity_reg = er.async_get(hass)
     device_reg = dr.async_get(hass)
 
-    _LOGGER.info(
-        "Setting up Plant Ranger integration, tracking %d entities (demo mode: %s)",
-        len(tracked_entities),
-        enable_demo,
-    )
-
-    # Set up demo sensor platform if enabled
-    if enable_demo:
-        await hass.config_entries.async_forward_entry_setups(entry, [Platform.SENSOR])
-
     @callback
-    def handle_sensor_update(event: Event) -> None:
+    def handle_sensor_update(event: Event[EventStateChangedData]) -> None:
         """Handle sensor state changes and forward to Plant Ranger."""
-        new_state: State | None = event.data.get("new_state")
-        old_state: State | None = event.data.get("old_state")
+        new_state = event.data["new_state"]
+        old_state = event.data["old_state"]
 
         if new_state is None:
             return
@@ -112,15 +122,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: PlantRangerConfigEntry) 
         else:
             _LOGGER.debug("Sensor update for %s: %s", entity_id, sensor_data)
 
-        # TODO: Send to Plant Ranger API asynchronously
-        # hass.async_create_task(runtime_data.client.send_sensor_data(sensor_data))
-
     # Subscribe to state changes
     entry.async_on_unload(
         hass.bus.async_listen(EVENT_STATE_CHANGED, handle_sensor_update)
     )
 
     return True
+
+
+async def _async_update_listener(
+    hass: HomeAssistant, entry: PlantRangerConfigEntry
+) -> None:
+    """Reload the entry when its options change."""
+    await hass.config_entries.async_reload(entry.entry_id)
 
 
 def _extract_sensor_data(
@@ -144,7 +158,7 @@ def _extract_sensor_data(
     entity_entry = entity_reg.async_get(entity_id)
     if entity_entry and entity_entry.device_id:
         device = device_reg.async_get(entity_entry.device_id)
-        if device:
+        if isinstance(device, dr.DeviceEntry):
             # Try to extract MAC address from device connections
             mac_address = _get_mac_from_device(device)
             if mac_address:
@@ -174,12 +188,4 @@ async def async_unload_entry(
     hass: HomeAssistant, entry: PlantRangerConfigEntry
 ) -> bool:
     """Unload a config entry."""
-    _LOGGER.info("Unloading Plant Ranger integration")
-
-    # Unload sensor platform if demo mode was enabled
-    if entry.data.get(CONF_ENABLE_DEMO, False):
-        return await hass.config_entries.async_unload_platforms(
-            entry, [Platform.SENSOR]
-        )
-
-    return True
+    return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)

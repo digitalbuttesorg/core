@@ -1,0 +1,95 @@
+# serializer version: 1
+# name: test_devices[bridge-1]
+  DeviceRegistryEntrySnapshot({
+    'area_id': 'office',
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'configuration_url': None,
+    'connections': set({
+      tuple(
+        'mac',
+        '10:20:30:40:50:60',
+      ),
+    }),
+    'disabled_by': None,
+    'entry_type': None,
+    'hw_version': None,
+    'id': <ANY>,
+    'identifiers': set({
+      tuple(
+        'plant_ranger',
+        'bridge-1',
+      ),
+    }),
+    'labels': set({
+    }),
+    'manufacturer': 'Plant Ranger',
+    'model': 'bridge',
+    'model_id': None,
+    'name': 'Office bridge',
+    'name_by_user': None,
+    'serial_number': None,
+    'sw_version': '1.2.0',
+    'via_device_id': None,
+  })
+# ---
+# name: test_devices[plant-1]
+  DeviceRegistryEntrySnapshot({
+    'area_id': 'living_room',
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'configuration_url': None,
+    'connections': set({
+    }),
+    'disabled_by': None,
+    'entry_type': None,
+    'hw_version': None,
+    'id': <ANY>,
+    'identifiers': set({
+      tuple(
+        'plant_ranger',
+        'plant-1',
+      ),
+    }),
+    'labels': set({
+    }),
+    'manufacturer': 'Plant Ranger',
+    'model': 'Monstera deliciosa',
+    'model_id': None,
+    'name': 'Monstera',
+    'name_by_user': None,
+    'serial_number': None,
+    'sw_version': None,
+    'via_device_id': None,
+  })
+# ---
+# name: test_devices[plant-2]
+  DeviceRegistryEntrySnapshot({
+    'area_id': 'office',
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'configuration_url': None,
+    'connections': set({
+    }),
+    'disabled_by': None,
+    'entry_type': None,
+    'hw_version': None,
+    'id': <ANY>,
+    'identifiers': set({
+      tuple(
+        'plant_ranger',
+        'plant-2',
+      ),
+    }),
+    'labels': set({
+    }),
+    'manufacturer': 'Plant Ranger',
+    'model': 'Ficus lyrata',
+    'model_id': None,
+    'name': 'Fiddle Leaf Fig',
+    'name_by_user': None,
+    'serial_number': None,
+    'sw_version': None,
+    'via_device_id': None,
+  })
+# ---

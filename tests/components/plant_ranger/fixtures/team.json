@@ -1,0 +1,82 @@
+{
+  "id": "team-1",
+  "name": "Home",
+  "owner_id": "account-1",
+  "email_enabled": true,
+  "last_accessed": "2026-09-01T10:00:00Z",
+  "stats": {
+    "devices_online": 1,
+    "needs_attention": 1,
+    "ok_plants": 1,
+    "total_plants": 2
+  },
+  "plants": [
+    {
+      "id": "plant-1",
+      "name": "Monstera",
+      "species": "Monstera deliciosa",
+      "location": "Living room",
+      "mac_address": "AA:BB:CC:DD:EE:01",
+      "status": "ok",
+      "last_checkup": "2026-09-01T09:30:00Z",
+      "battery": 88,
+      "conductivity": 950,
+      "humidity": 55.5,
+      "light": 420,
+      "moisture": 41.2,
+      "signal_strength": -61,
+      "temperature": 22.4,
+      "needs_water": false,
+      "offline": false,
+      "low_battery": false,
+      "low_signal": false,
+      "out_of_range": false,
+      "conductivity_alert": false,
+      "humidity_alert": false,
+      "light_alert": false,
+      "moisture_alert": false,
+      "rssi_alert": false,
+      "temperature_alert": false
+    },
+    {
+      "id": "plant-2",
+      "name": "Fiddle Leaf Fig",
+      "species": "Ficus lyrata",
+      "location": "Office",
+      "mac_address": null,
+      "status": "needs_attention",
+      "last_checkup": "2026-08-30T08:00:00Z",
+      "battery": 12,
+      "conductivity": 300,
+      "humidity": 38.0,
+      "light": 90,
+      "moisture": 9.5,
+      "signal_strength": -88,
+      "temperature": 17.1,
+      "needs_water": true,
+      "offline": true,
+      "low_battery": true,
+      "low_signal": true,
+      "out_of_range": true,
+      "conductivity_alert": true,
+      "humidity_alert": false,
+      "light_alert": true,
+      "moisture_alert": true,
+      "rssi_alert": true,
+      "temperature_alert": false
+    }
+  ],
+  "bridges": [
+    {
+      "id": "bridge-1",
+      "name": "Office bridge",
+      "device_type": "bridge",
+      "location": "Office",
+      "mac_address": "10:20:30:40:50:60",
+      "offline": false,
+      "registered": true,
+      "status": "online",
+      "version": "1.2.0"
+    }
+  ]
+}

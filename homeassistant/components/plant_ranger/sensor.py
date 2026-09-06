@@ -1,143 +1,147 @@
-"""Demo sensor platform for Plant Ranger integration."""
+"""Sensor platform for the Plant Ranger integration."""
 
-from __future__ import annotations
+from collections.abc import Callable
+from dataclasses import dataclass
+from datetime import datetime
+from typing import override
 
-from datetime import timedelta
-import logging
-import random
+from plantranger import PlantSummary
 
 from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntity,
+    SensorEntityDescription,
     SensorStateClass,
 )
-from homeassistant.const import PERCENTAGE, UnitOfIlluminance, UnitOfTemperature
+from homeassistant.const import (
+    LIGHT_LUX,
+    PERCENTAGE,
+    SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
+    EntityCategory,
+    UnitOfConductivity,
+    UnitOfTemperature,
+)
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers.device_registry import DeviceInfo
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.event import async_track_time_interval
+from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
+from homeassistant.helpers.typing import StateType
 
-from .const import CONF_ENABLE_DEMO, DEMO_MAC_ADDRESS, DEMO_PLANT_NAME, DOMAIN
-from .types import PlantRangerConfigEntry
+from .coordinator import PlantRangerConfigEntry
+from .entity import PlantRangerPlantEntity
 
-_LOGGER = logging.getLogger(__name__)
+PARALLEL_UPDATES = 0
 
-UPDATE_INTERVAL = timedelta(minutes=10)
+
+@dataclass(frozen=True, kw_only=True)
+class PlantRangerSensorEntityDescription(SensorEntityDescription):
+    """Describes a Plant Ranger sensor."""
+
+    value_fn: Callable[[PlantSummary], StateType | datetime]
+
+
+SENSORS: tuple[PlantRangerSensorEntityDescription, ...] = (
+    PlantRangerSensorEntityDescription(
+        key="moisture",
+        device_class=SensorDeviceClass.MOISTURE,
+        native_unit_of_measurement=PERCENTAGE,
+        state_class=SensorStateClass.MEASUREMENT,
+        value_fn=lambda plant: plant.moisture,
+    ),
+    PlantRangerSensorEntityDescription(
+        key="temperature",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+        value_fn=lambda plant: plant.temperature,
+    ),
+    PlantRangerSensorEntityDescription(
+        key="humidity",
+        device_class=SensorDeviceClass.HUMIDITY,
+        native_unit_of_measurement=PERCENTAGE,
+        state_class=SensorStateClass.MEASUREMENT,
+        value_fn=lambda plant: plant.humidity,
+    ),
+    PlantRangerSensorEntityDescription(
+        key="illuminance",
+        device_class=SensorDeviceClass.ILLUMINANCE,
+        native_unit_of_measurement=LIGHT_LUX,
+        state_class=SensorStateClass.MEASUREMENT,
+        value_fn=lambda plant: plant.light,
+    ),
+    PlantRangerSensorEntityDescription(
+        key="conductivity",
+        device_class=SensorDeviceClass.CONDUCTIVITY,
+        native_unit_of_measurement=UnitOfConductivity.MICROSIEMENS_PER_CM,
+        state_class=SensorStateClass.MEASUREMENT,
+        value_fn=lambda plant: plant.conductivity,
+    ),
+    PlantRangerSensorEntityDescription(
+        key="battery",
+        device_class=SensorDeviceClass.BATTERY,
+        native_unit_of_measurement=PERCENTAGE,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda plant: plant.battery,
+    ),
+    PlantRangerSensorEntityDescription(
+        key="signal_strength",
+        device_class=SensorDeviceClass.SIGNAL_STRENGTH,
+        native_unit_of_measurement=SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+        value_fn=lambda plant: plant.signal_strength,
+    ),
+    PlantRangerSensorEntityDescription(
+        key="last_checkup",
+        translation_key="last_checkup",
+        device_class=SensorDeviceClass.TIMESTAMP,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda plant: plant.last_checkup,
+    ),
+    PlantRangerSensorEntityDescription(
+        key="status",
+        translation_key="status",
+        value_fn=lambda plant: plant.status,
+    ),
+)
 
 
 async def async_setup_entry(
     hass: HomeAssistant,
     entry: PlantRangerConfigEntry,
-    async_add_entities: AddEntitiesCallback,
+    async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
-    """Set up Plant Ranger demo sensors."""
-    if not entry.data.get(CONF_ENABLE_DEMO, False):
-        return
-
-    _LOGGER.info("Setting up Plant Ranger demo sensors")
-
-    # Create demo device
-    device_info = DeviceInfo(
-        identifiers={(DOMAIN, DEMO_MAC_ADDRESS)},
-        name=DEMO_PLANT_NAME,
-        manufacturer="Plant Ranger",
-        model="Demo Plant v1.0",
-        connections={("bluetooth", DEMO_MAC_ADDRESS)},
-    )
-
-    # Create demo sensors
-    sensors = [
-        PlantRangerDemoSensor(
-            device_info=device_info,
-            name="Temperature",
-            device_class=SensorDeviceClass.TEMPERATURE,
-            unit=UnitOfTemperature.CELSIUS,
-            base_value=22.0,
-            variance=3.0,
-        ),
-        PlantRangerDemoSensor(
-            device_info=device_info,
-            name="Humidity",
-            device_class=SensorDeviceClass.HUMIDITY,
-            unit=PERCENTAGE,
-            base_value=65.0,
-            variance=10.0,
-        ),
-        PlantRangerDemoSensor(
-            device_info=device_info,
-            name="Moisture",
-            device_class=SensorDeviceClass.MOISTURE,
-            unit=PERCENTAGE,
-            base_value=45.0,
-            variance=5.0,
-        ),
-        PlantRangerDemoSensor(
-            device_info=device_info,
-            name="Illuminance",
-            device_class=SensorDeviceClass.ILLUMINANCE,
-            unit=UnitOfIlluminance.LUX,
-            base_value=500.0,
-            variance=200.0,
-        ),
-    ]
-
-    async_add_entities(sensors)
-
-    # Schedule periodic updates
-    @callback
-    def update_sensors(_now) -> None:
-        """Update all demo sensors."""
-        for sensor in sensors:
-            sensor.update_value()
-
-    entry.async_on_unload(
-        async_track_time_interval(hass, update_sensors, UPDATE_INTERVAL)
-    )
-
-
-class PlantRangerDemoSensor(SensorEntity):
-    """Demo sensor entity for Plant Ranger."""
-
-    _attr_has_entity_name = True
-    _attr_should_poll = False
-    _attr_state_class = SensorStateClass.MEASUREMENT
-
-    def __init__(
-        self,
-        device_info: DeviceInfo,
-        name: str,
-        device_class: SensorDeviceClass,
-        unit: str,
-        base_value: float,
-        variance: float,
-    ) -> None:
-        """Initialize the demo sensor."""
-        self._attr_device_info = device_info
-        self._attr_name = name
-        self._attr_device_class = device_class
-        self._attr_native_unit_of_measurement = unit
-        self._attr_unique_id = f"{DEMO_MAC_ADDRESS}_{device_class}".lower()
-
-        self._base_value = base_value
-        self._variance = variance
-        self._attr_native_value = base_value
+    """Set up Plant Ranger sensors."""
+    coordinator = entry.runtime_data
+    known_plants: set[str] = set()
 
     @callback
-    def update_value(self) -> None:
-        """Update the sensor value with random variance."""
-        # Generate realistic-looking random value
-        change = random.uniform(-self._variance / 2, self._variance / 2)
-        new_value = self._base_value + change
+    def _check_plants() -> None:
+        if new_plants := set(coordinator.data) - known_plants:
+            known_plants.update(new_plants)
+            async_add_entities(
+                PlantRangerSensor(coordinator, plant_id, description)
+                for plant_id in new_plants
+                for description in SENSORS
+            )
 
-        # Clamp percentage values
-        if self._attr_native_unit_of_measurement == PERCENTAGE:
-            new_value = max(0, min(100, new_value))
+    _check_plants()
+    entry.async_on_unload(coordinator.async_add_listener(_check_plants))
 
-        self._attr_native_value = round(new_value, 1)
-        self.async_write_ha_state()
-        _LOGGER.debug(
-            "Updated demo sensor %s to %s %s",
-            self.name,
-            self._attr_native_value,
-            self._attr_native_unit_of_measurement,
-        )
+
+class PlantRangerSensor(PlantRangerPlantEntity, SensorEntity):
+    """A measurement reported by Plant Ranger for a plant."""
+
+    entity_description: PlantRangerSensorEntityDescription
+
+    @property
+    @override
+    def native_value(self) -> StateType | datetime:
+        """Return the current reading."""
+        return self.entity_description.value_fn(self.plant)
+
+    @property
+    @override
+    def available(self) -> bool:
+        """Readings go stale once the sensor stops reporting."""
+        return super().available and not self.plant.offline
