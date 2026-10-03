@@ -32,6 +32,30 @@
       }
     }
   },
+  "config_subentries": {
+    "plant": {
+      "abort": {
+        "device_unavailable": "This plant sensor is no longer available.",
+        "no_devices": "No plant sensors were found. Plant Ranger supports plant sensors that use the BTHome standard. Add yours to Home Assistant first, then try again."
+      },
+      "entry_type": "Plant",
+      "initiate_flow": {
+        "user": "Add plant"
+      },
+      "step": {
+        "user": {
+          "data": {
+            "device_id": "Plant sensor"
+          },
+          "data_description": {
+            "device_id": "Plant sensors added to Home Assistant through the BTHome integration."
+          },
+          "description": "Select the plant sensor to link to this plant.",
+          "title": "[%key:component::plant_ranger::config_subentries::plant::initiate_flow::user%]"
+        }
+      }
+    }
+  },
   "entity": {
     "binary_sensor": {
       "conductivity_alert": {

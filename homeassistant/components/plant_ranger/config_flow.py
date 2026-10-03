@@ -12,16 +12,25 @@ from homeassistant.config_entries import (
     SOURCE_RECONFIGURE,
     ConfigEntry,
     ConfigFlowResult,
+    ConfigSubentryFlow,
     OptionsFlow,
+    SubentryFlowResult,
 )
-from homeassistant.const import CONF_ACCESS_TOKEN, CONF_TOKEN
+from homeassistant.const import CONF_ACCESS_TOKEN, CONF_DEVICE_ID, CONF_MAC, CONF_TOKEN
 from homeassistant.core import callback
 from homeassistant.helpers import config_entry_oauth2_flow
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from homeassistant.helpers.selector import BooleanSelector
+from homeassistant.helpers.selector import (
+    BooleanSelector,
+    SelectOptionDict,
+    SelectSelector,
+    SelectSelectorConfig,
+    SelectSelectorMode,
+)
 
 from .api import SimpleAuth, async_import_built_in_credential
-from .const import CONF_ENABLE_DEMO, DEFAULT_TITLE, DOMAIN
+from .const import CONF_ENABLE_DEMO, DEFAULT_TITLE, DOMAIN, SUBENTRY_TYPE_PLANT
+from .helpers import async_get_bthome_plant_devices
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -49,6 +58,15 @@ class PlantRangerFlowHandler(
     def async_get_options_flow(config_entry: ConfigEntry) -> OptionsFlow:
         """Return the options flow."""
         return PlantRangerOptionsFlowHandler()
+
+    @classmethod
+    @callback
+    @override
+    def async_get_supported_subentry_types(
+        cls, config_entry: ConfigEntry
+    ) -> dict[str, type[ConfigSubentryFlow]]:
+        """Return subentries supported by this integration."""
+        return {SUBENTRY_TYPE_PLANT: PlantSubentryFlowHandler}
 
     @override
     async def async_step_user(
@@ -130,5 +148,54 @@ class PlantRangerOptionsFlowHandler(OptionsFlow):
             step_id="init",
             data_schema=self.add_suggested_values_to_schema(
                 OPTIONS_SCHEMA, self.config_entry.options
+            ),
+        )
+
+
+class PlantSubentryFlowHandler(ConfigSubentryFlow):
+    """Handle adding a BTHome plant sensor as a subentry."""
+
+    async def async_step_user(
+        self, user_input: dict[str, Any] | None = None
+    ) -> SubentryFlowResult:
+        """Let the user pick a BTHome plant sensor."""
+        added_macs = {
+            subentry.unique_id for subentry in self._get_entry().subentries.values()
+        }
+        # DeviceSelector can't exclude devices, so offer only the ones not yet added.
+        devices = {
+            device.id: (device.name_by_user or device.name or mac, mac)
+            for mac, device in async_get_bthome_plant_devices(self.hass).items()
+            if mac not in added_macs
+        }
+        if user_input is not None:
+            # It may have been added, disabled or removed since the form was shown.
+            if (selected := devices.get(user_input[CONF_DEVICE_ID])) is None:
+                return self.async_abort(reason="device_unavailable")
+            name, mac = selected
+            return self.async_create_entry(
+                title=name,
+                data={CONF_DEVICE_ID: user_input[CONF_DEVICE_ID], CONF_MAC: mac},
+                unique_id=mac,
+            )
+
+        if not devices:
+            return self.async_abort(reason="no_devices")
+
+        return self.async_show_form(
+            step_id="user",
+            data_schema=vol.Schema(
+                {
+                    vol.Required(CONF_DEVICE_ID): SelectSelector(
+                        SelectSelectorConfig(
+                            options=[
+                                SelectOptionDict(value=device_id, label=name)
+                                for device_id, (name, _) in devices.items()
+                            ],
+                            mode=SelectSelectorMode.DROPDOWN,
+                            sort=True,
+                        )
+                    )
+                }
             ),
         )

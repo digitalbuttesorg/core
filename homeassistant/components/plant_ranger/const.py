@@ -4,9 +4,12 @@ from datetime import timedelta
 from typing import Final
 
 DOMAIN: Final = "plant_ranger"
+BTHOME_DOMAIN: Final = "bthome"
 
 CONF_TRACKED_ENTITIES: Final = "tracked_entities"
 CONF_ENABLE_DEMO: Final = "enable_demo"
+
+SUBENTRY_TYPE_PLANT: Final = "plant"
 
 DEFAULT_TITLE: Final = "Plant Ranger"
 
