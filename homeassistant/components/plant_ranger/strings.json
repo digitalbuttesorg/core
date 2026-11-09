@@ -9,8 +9,6 @@
       "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
       "missing_configuration": "[%key:common::config_flow::abort::oauth2_missing_configuration%]",
       "no_team": "The authorized token does not grant access to a Plant Ranger team.",
-      "reauth_successful": "[%key:common::config_flow::abort::reauth_successful%]",
-      "reconfigure_successful": "[%key:common::config_flow::abort::reconfigure_successful%]",
       "wrong_account": "Wrong account: Please authenticate with the account this entry was set up with."
     },
     "create_entry": {
@@ -29,6 +27,30 @@
       "reauth_confirm": {
         "description": "The Plant Ranger integration needs to re-authenticate your account.",
         "title": "[%key:common::config_flow::title::reauth%]"
+      }
+    }
+  },
+  "config_subentries": {
+    "plant": {
+      "abort": {
+        "device_unavailable": "This plant sensor is no longer available.",
+        "no_devices": "No plant sensors were found. Plant Ranger supports plant sensors that use the BTHome standard. Add yours to Home Assistant first, then try again."
+      },
+      "entry_type": "Plant",
+      "initiate_flow": {
+        "user": "Add plant"
+      },
+      "step": {
+        "user": {
+          "data": {
+            "device_id": "Plant sensor"
+          },
+          "data_description": {
+            "device_id": "Plant sensors added to Home Assistant through the BTHome integration."
+          },
+          "description": "Select the plant sensor to link to this plant.",
+          "title": "[%key:component::plant_ranger::config_subentries::plant::initiate_flow::user%]"
+        }
       }
     }
   },

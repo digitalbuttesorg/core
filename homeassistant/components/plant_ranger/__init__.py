@@ -53,7 +53,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: PlantRangerConfigEntry) -> bool:
+async def async_setup_entry(hass: HomeAssistant, entry: PlantRangerConfigEntry) -> None:
     """Set up Plant Ranger from a config entry."""
     implementation = await async_get_config_entry_implementation(hass, entry)
     auth = AsyncConfigEntryAuth(
@@ -127,8 +127,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: PlantRangerConfigEntry) 
         hass.bus.async_listen(EVENT_STATE_CHANGED, handle_sensor_update)
     )
 
-    return True
-
 
 async def _async_update_listener(
     hass: HomeAssistant, entry: PlantRangerConfigEntry
@@ -186,6 +184,6 @@ def _get_mac_from_device(device: dr.DeviceEntry) -> str | None:
 
 async def async_unload_entry(
     hass: HomeAssistant, entry: PlantRangerConfigEntry
-) -> bool:
+) -> None:
     """Unload a config entry."""
-    return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+    await hass.config_entries.async_unload_platforms_or_raise(entry, PLATFORMS)

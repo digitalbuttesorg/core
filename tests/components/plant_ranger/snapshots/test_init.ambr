@@ -3,7 +3,7 @@
   DeviceRegistryEntrySnapshot({
     'area_id': 'office',
     'config_entry_id': <ANY>,
-    'config_subentry_id': <ANY>,
+    'config_subentry_id': None,
     'configuration_url': None,
     'connections': set({
       tuple(
@@ -37,7 +37,7 @@
   DeviceRegistryEntrySnapshot({
     'area_id': 'living_room',
     'config_entry_id': <ANY>,
-    'config_subentry_id': <ANY>,
+    'config_subentry_id': None,
     'configuration_url': None,
     'connections': set({
     }),
@@ -67,7 +67,7 @@
   DeviceRegistryEntrySnapshot({
     'area_id': 'office',
     'config_entry_id': <ANY>,
-    'config_subentry_id': <ANY>,
+    'config_subentry_id': None,
     'configuration_url': None,
     'connections': set({
     }),

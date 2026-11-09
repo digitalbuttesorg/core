@@ -11517,6 +11517,9 @@
     "plant_ranger": {
       "name": "Plant Ranger",
       "integration_type": "service",
+      "categories": [
+        "garden_plants"
+      ],
       "config_flow": true,
       "iot_class": "cloud_polling"
     },
