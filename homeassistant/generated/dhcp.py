@@ -280,6 +280,10 @@ DHCP: Final[list[dict[str, str | bool]]] = [
         "macaddress": "000463*",
     },
     {
+        "domain": "braviatv",
+        "registered_devices": True,
+    },
+    {
         "domain": "broadlink",
         "registered_devices": True,
     },
@@ -334,6 +338,10 @@ DHCP: Final[list[dict[str, str | bool]]] = [
     {
         "domain": "earn_e_p1",
         "registered_devices": True,
+    },
+    {
+        "domain": "electrasmart",
+        "hostname": "elrssid*",
     },
     {
         "domain": "elgato",
@@ -514,23 +522,7 @@ DHCP: Final[list[dict[str, str | bool]]] = [
     },
     {
         "domain": "imou",
-        "macaddress": "38AF29*",
-    },
-    {
-        "domain": "imou",
-        "macaddress": "3CE36B*",
-    },
-    {
-        "domain": "imou",
-        "macaddress": "3CEF8C*",
-    },
-    {
-        "domain": "imou",
         "macaddress": "906A94*",
-    },
-    {
-        "domain": "imou",
-        "macaddress": "A0BD1D*",
     },
     {
         "domain": "imou",
@@ -539,14 +531,6 @@ DHCP: Final[list[dict[str, str | bool]]] = [
     {
         "domain": "imou",
         "macaddress": "AC3DFA*",
-    },
-    {
-        "domain": "imou",
-        "macaddress": "B44C3B*",
-    },
-    {
-        "domain": "imou",
-        "macaddress": "FCB69D*",
     },
     {
         "domain": "incomfort",
@@ -674,6 +658,14 @@ DHCP: Final[list[dict[str, str | bool]]] = [
     {
         "domain": "motion_blinds",
         "hostname": "connector_*",
+    },
+    {
+        "domain": "my_pv",
+        "registered_devices": True,
+    },
+    {
+        "domain": "my_pv",
+        "macaddress": "986D35C*",
     },
     {
         "domain": "mystrom",
@@ -1535,6 +1527,10 @@ DHCP: Final[list[dict[str, str | bool]]] = [
         "macaddress": "F0A731*",
     },
     {
+        "domain": "trmnl",
+        "hostname": "trmnl-*",
+    },
+    {
         "domain": "tuya",
         "macaddress": "105A17*",
     },
@@ -1646,6 +1642,10 @@ DHCP: Final[list[dict[str, str | bool]]] = [
     {
         "domain": "vistapool",
         "hostname": "sugarwifi",
+    },
+    {
+        "domain": "whirlpool",
+        "macaddress": "88E712*",
     },
     {
         "domain": "withings",
