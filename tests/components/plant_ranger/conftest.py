@@ -5,12 +5,11 @@ from unittest.mock import AsyncMock, patch
 
 from plantranger import Team, TeamListItem
 import pytest
+from pytest_homeassistant.common import MockConfigEntry, load_json_object_fixture
 
 from homeassistant.components.plant_ranger.const import DOMAIN
 from homeassistant.core import HomeAssistant
 from homeassistant.setup import async_setup_component
-
-from tests.common import MockConfigEntry, load_json_object_fixture
 
 TEAM_ID = "team-1"
 OTHER_TEAM_ID = "team-2"
@@ -53,7 +52,7 @@ def mock_config_entry(expires_at: int) -> MockConfigEntry:
 def mock_setup_entry() -> Generator[AsyncMock]:
     """Override async_setup_entry."""
     with patch(
-        "homeassistant.components.plant_ranger.async_setup_entry", return_value=True
+        "homeassistant.components.plant_ranger.async_setup_entry", return_value=None
     ) as mock_setup_entry:
         yield mock_setup_entry
 

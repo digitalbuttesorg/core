@@ -10,6 +10,9 @@ from plantranger import (
     TeamListItem,
 )
 import pytest
+from pytest_homeassistant.common import MockConfigEntry
+from pytest_homeassistant.test_util.aiohttp import AiohttpClientMocker
+from pytest_homeassistant.typing import ClientSessionGenerator
 from yarl import URL
 
 from homeassistant.components.plant_ranger.const import (
@@ -30,10 +33,6 @@ from homeassistant.helpers import (
 )
 
 from .conftest import OTHER_TEAM_ID, TEAM_ID
-
-from tests.common import MockConfigEntry
-from tests.test_util.aiohttp import AiohttpClientMocker
-from tests.typing import ClientSessionGenerator
 
 REDIRECT_URI = "https://example.com/auth/external/callback"
 

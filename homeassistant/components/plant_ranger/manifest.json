@@ -1,6 +1,7 @@
 {
   "domain": "plant_ranger",
   "name": "Plant Ranger",
+  "categories": ["garden_plants"],
   "codeowners": ["@digitalbuttesorg"],
   "config_flow": true,
   "dependencies": ["application_credentials"],

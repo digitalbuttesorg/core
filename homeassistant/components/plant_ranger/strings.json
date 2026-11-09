@@ -9,8 +9,6 @@
       "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
       "missing_configuration": "[%key:common::config_flow::abort::oauth2_missing_configuration%]",
       "no_team": "The authorized token does not grant access to a Plant Ranger team.",
-      "reauth_successful": "[%key:common::config_flow::abort::reauth_successful%]",
-      "reconfigure_successful": "[%key:common::config_flow::abort::reconfigure_successful%]",
       "wrong_account": "Wrong account: Please authenticate with the account this entry was set up with."
     },
     "create_entry": {
