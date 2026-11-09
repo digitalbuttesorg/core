@@ -6,6 +6,7 @@ from unittest.mock import AsyncMock, patch
 
 from midealocal.const import DeviceType
 import pytest
+from pytest_homeassistant.common import MockConfigEntry
 
 from homeassistant.components.midea.const import CONF_KEY, CONF_SN, CONF_SUBTYPE, DOMAIN
 from homeassistant.components.midea.device_catalog import MIDEA_DEVICE_NAMES
@@ -24,8 +25,6 @@ from .const import (
     TEST_TOKEN,
 )
 
-from tests.common import MockConfigEntry
-
 type SetDeviceAttribute = Callable[[DummyDevice, str, Any], Coroutine[Any, Any, None]]
 
 
@@ -37,6 +36,7 @@ class DummyDevice:
         device_type: DeviceType,
         *,
         attributes: dict | None = None,
+        capabilities: dict | None = None,
     ) -> None:
         """Initialize fake device."""
         self.device_type = device_type
@@ -46,11 +46,14 @@ class DummyDevice:
         self.subtype = TEST_SUBTYPE
         self.available = False
         self.attributes = attributes or {}
-        self.capabilities: dict[str, Any] = {}
+        self.capabilities: dict[str, Any] = capabilities or {}
         self._callbacks: list[Callable] = []
         self.calls: list[tuple] = []
+        self.is_filter_reset_supported = False
         self.temperature_step = 1
-        self.fan_modes = ["Low", "Medium", "High", "Auto"]
+        self.raw_hvac_modes = ["off", "auto", "cool", "dry", "heat", "fan_only"]
+        self.raw_fan_modes = ["low", "medium", "high", "auto"]
+        self.raw_fan_mode: str | None = "high"
         self.modes = [
             "Auto",
             "ECO",
@@ -88,17 +91,25 @@ class DummyDevice:
         self.notify_update({attr: value})
         self.calls.append(("set_attribute", attr, value))
 
-    def set_target_temperature(self, **kwargs: Any) -> None:
+    def set_raw_target_temperature(self, **kwargs: Any) -> None:
         """Record set target temperature call."""
-        self.calls.append(("set_target_temperature", kwargs))
+        self.calls.append(("set_raw_target_temperature", kwargs))
 
-    def set_swing(self, **kwargs: Any) -> None:
-        """Record set swing call."""
-        self.calls.append(("set_swing", kwargs))
+    def set_raw_swing_mode(self, swing_mode: str) -> None:
+        """Record set swing mode call."""
+        self.calls.append(("set_raw_swing_mode", swing_mode))
 
-    def set_mode(self, zone: int, mode: int) -> None:
-        """Record set mode call."""
-        self.calls.append(("set_mode", zone, mode))
+    def set_raw_fan_mode(self, fan_mode: str) -> None:
+        """Record set fan mode call."""
+        self.calls.append(("set_raw_fan_mode", fan_mode))
+
+    def set_raw_hvac_mode(self, hvac_mode: str, zone: int | None = None) -> None:
+        """Record set hvac mode call."""
+        self.calls.append(("set_raw_hvac_mode", hvac_mode, zone))
+
+    def reset_filter(self) -> None:
+        """Record filter reset call."""
+        self.calls.append(("reset_filter",))
 
     def start_work(self) -> None:
         """Record start_work call."""
@@ -108,21 +119,21 @@ class DummyDevice:
         """Record turn_on call."""
         self.calls.append(("turn_on", fan_speed, mode))
 
-    def connect(self, check_protocol: bool = False) -> bool:
+    async def connect(self, check_protocol: bool = False) -> bool:
         """Record connect call and mirror midealocal's availability handling."""
         self.calls.append(("connect", check_protocol))
         self.available = check_protocol
         return check_protocol
 
-    def open(self) -> None:
+    async def open(self) -> None:
         """Record open call."""
         self.calls.append(("open",))
 
-    def close(self) -> None:
+    async def close(self) -> None:
         """Record close call."""
         self.calls.append(("close",))
 
-    def close_socket(self) -> None:
+    async def close_socket(self) -> None:
         """Record close_socket call."""
         self.calls.append(("close_socket",))
 
@@ -162,7 +173,7 @@ def mock_setup_entry() -> Generator[AsyncMock]:
     """Prevent loading the integration during config flow tests."""
     with patch(
         "homeassistant.components.midea.async_setup_entry",
-        return_value=True,
+        return_value=None,
     ) as mock_entry:
         yield mock_entry
 
